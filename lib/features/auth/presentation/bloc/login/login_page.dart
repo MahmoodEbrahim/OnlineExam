@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam/Route/app_route.dart';
 
 import '../../../../../Theme/app_colors.dart';
+import '../../../data/datasources.dart';
+import '../../../data/repositories.dart';
+import '../../../domain/usecases.dart';
 import 'login_bloc.dart';
 import 'login_event.dart';
 import 'login_state.dart';
@@ -14,7 +17,13 @@ class LoginPage extends StatelessWidget  {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginBloc(),
+      create: (context) => LoginBloc(
+          LogicUserCase(
+              AuthRepositoryImpl(
+                  AuthRemoteDatasource(),
+              )
+          )
+      ),
       child: Scaffold(
         appBar: AppBar(title: Text("Login")),
         body: BlocConsumer<LoginBloc, LoginState>(
@@ -40,7 +49,6 @@ class LoginPage extends StatelessWidget  {
                     children: [
                       TextField(
                         controller: emailController,
-                        obscureText: true,
                         decoration: InputDecoration(
                             labelText: "Email",
                             hintText: "Enter you email",
