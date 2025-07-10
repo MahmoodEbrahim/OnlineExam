@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../Route/app_route.dart';
-import '../../Theme/app_colors.dart';
+
 
 class SignupPage extends StatelessWidget {
   const SignupPage({super.key});

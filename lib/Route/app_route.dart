@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../Screen/Login&sinin/forget_password_flow.dart';
-import '../Screen/Login&sinin/loginpage.dart';
-import '../Screen/Login&sinin/sininpage.dart';
+
+import '../features/auth/presentation/Screen/Login&sinin/forget_password_flow.dart';
+import '../features/auth/presentation/Screen/Login&sinin/sininpage.dart';
+import '../features/auth/presentation/bloc/login/login_page.dart';
 import '../main.dart';
 
 abstract class AppRoutes {
@@ -11,7 +12,7 @@ abstract class AppRoutes {
   static const String forgetpass = '/forgetpass';
   static Map<String, WidgetBuilder> getRoutes() {
     return {
-      login: (context) => const LoginPage(),
+      login: (context) => LoginPage(),
       forgetpass: (context) => const ForgetPasswordFlow(),
       signup: (context) => const SignupPage(),
     };
