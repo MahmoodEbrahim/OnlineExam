@@ -1,25 +1,25 @@
-// data/datasources/auth_remote_datasource.dart
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:online_exam/features/auth/data/remote/auth_api_client.dart';
 
 import 'models.dart';
 
 class AuthRemoteDatasource {
-  Future<UserModel> login(String email, String password) async {
-    final response = await http.post(
-      Uri.parse('https://exam.elevateegy.com/api/v1/auth/signin'),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({
-        "email": email,
-        "password": password,
-      }),
-    );
+  final AuthApiClient apiClient;
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return UserModel.fromJson(data['user']);
-    } else {
-      throw Exception('Login failed');
-    }
+  AuthRemoteDatasource(this.apiClient);
+
+  Future<UserModel> login(String email, String password) {
+    return apiClient.login({
+      "email": email,
+      "password": password,
+    });
+  }
+
+  Future<UserModel> signup(String name, String email, String password,int phone) {
+    return apiClient.signup({
+      "name": name,
+      "email": email,
+      "password": password,
+      "phone":phone,
+    });
   }
 }
