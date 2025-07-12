@@ -14,12 +14,23 @@ class AuthRemoteDatasource {
     });
   }
 
-  Future<UserModel> signup(String name, String email, String password,int phone) {
-    return apiClient.signup({
-      "name": name,
+  Future<UserModel> signup({
+    required String username,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+    required String rePassword,
+    required String phone,
+  }) async {
+    return await apiClient.signup({
+      "username": username,
+      "firstName": firstName,
+      "lastName": lastName,
       "email": email,
       "password": password,
-      "phone":phone,
+      "rePassword": rePassword,
+      "phone": phone,
     });
   }
 }

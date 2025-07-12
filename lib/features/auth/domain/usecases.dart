@@ -10,12 +10,29 @@ class LogicUserCase{
     return await repo.login(email, password);
   }
 }
-class SignupUserCase{
-  final AuthRepository repo;
+class SignupUseCase {
+  final AuthRepository repository;
 
-  SignupUserCase(this.repo);
+  SignupUseCase(this.repository);
 
-  Future<UserEntity> call(String name,String email,String password,int phone) async{
-    return await repo.signup(name,email, password,phone);
+  Future<UserEntity> call({
+    required String username,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+    required String rePassword,
+    required String phone,
+  }) {
+    return repository.signup(
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      rePassword: rePassword,
+      phone: phone,
+    );
+
   }
 }

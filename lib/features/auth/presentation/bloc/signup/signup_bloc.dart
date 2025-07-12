@@ -4,7 +4,7 @@ import 'signup_event.dart';
 import 'signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  final SignupUserCase signupUseCase;
+  final SignupUseCase signupUseCase;
 
   SignupBloc(this.signupUseCase) : super(SignupInitial()) {
     on<SignupButtonPressed>((event, emit) async {
@@ -12,10 +12,13 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
       try {
         final user = await signupUseCase(
-          event.name,
-          event.email,
-          event.password,
-          event.phone
+          username: event.username,
+          firstName: event.firstName,
+          lastName: event.lastName,
+          email: event.email,
+          password: event.password,
+          rePassword: event.rePassword,
+          phone: event.phone,
         );
 
         emit(SignupSuccess());
