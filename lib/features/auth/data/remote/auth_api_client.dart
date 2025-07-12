@@ -2,7 +2,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 import '../models.dart';
 
-part 'auth_api_client.g.dart'; // ← هذا السطر لازم يكون بعد كل import
+part 'auth_api_client.g.dart';
 
 @RestApi(baseUrl: 'https://exam.elevateegy.com/api/v1')
 abstract class AuthApiClient {
