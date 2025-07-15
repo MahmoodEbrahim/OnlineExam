@@ -32,4 +32,9 @@ class AuthRepositoryImpl implements AuthRepository {
       phone: phone,
     );
   }
+
+  @override
+  Future<void> forgetpassword(String email) {
+    return remote.forgetpassword(email);
+  }
 }

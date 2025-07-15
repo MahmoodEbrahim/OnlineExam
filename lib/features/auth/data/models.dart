@@ -2,7 +2,10 @@
 import '../domain/entities.dart';
 
 class UserModel extends UserEntity {
+  final String token;
+
   UserModel({
+    required this.token,
     required String id,
     required String username,
     required String email,
@@ -14,6 +17,7 @@ class UserModel extends UserEntity {
     email: email,
     name: name,
     phone: phone,
+    token: token,
   );
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +29,6 @@ class UserModel extends UserEntity {
       email: user['email'],
       name: '${user['firstName']} ${user['lastName']}',
       phone: user['phone'],
-    );
+      token: json['token'],    );
   }
 }

@@ -13,4 +13,7 @@ abstract class AuthApiClient {
 
   @POST('/auth/signup')
   Future<UserModel> signup(@Body() Map<String, dynamic> body);
+  
+  @POST("/auth/forgotPassword")
+  Future<void> forgetpassword(@Body() Map<String, dynamic> body);
 }

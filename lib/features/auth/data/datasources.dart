@@ -33,4 +33,8 @@ class AuthRemoteDatasource {
       "phone": phone,
     });
   }
+
+  Future<void> forgetpassword(String email)async{
+    await apiClient.forgetpassword({"email" :email});
+  }
 }

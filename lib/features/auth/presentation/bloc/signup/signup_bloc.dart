@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import '../../../domain/usecases.dart';
 import 'signup_event.dart';
 import 'signup_state.dart';
@@ -20,7 +21,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           rePassword: event.rePassword,
           phone: event.phone,
         );
-
+        final box = Hive.box('authBox');
+        await box.put('token', user.token);
         emit(SignupSuccess());
       } catch (e) {
         emit(SignupFailure(e.toString()));

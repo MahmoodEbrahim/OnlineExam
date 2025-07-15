@@ -11,5 +11,6 @@ abstract class AuthRepository{
     required String rePassword,
     required String phone,
   });
+  Future<void> forgetpassword(String email);
 }
 
