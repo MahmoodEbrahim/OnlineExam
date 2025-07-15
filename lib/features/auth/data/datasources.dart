@@ -41,4 +41,16 @@ class AuthRemoteDatasource {
     await apiClient.verifyResetCode({"resetCode": code});
   }
 
+  Future<void> resetPassword({
+    required String email,
+    required String newPassword,
+    required String reNewPassword,
+  }) async {
+    await apiClient.resetPassword({
+      "email": email,
+      "newPassword": newPassword,
+      "reNewPassword": reNewPassword,
+    });
+  }
+
 }

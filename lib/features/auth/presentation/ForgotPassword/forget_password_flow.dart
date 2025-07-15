@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../ForgotPassword/VerifyCode/verify_code_event.dart';
-import '../../ForgotPassword/VerifyCode/verify_code_bloc.dart';
-import '../../ForgotPassword/forgot_password_event.dart';
-import '../../ForgotPassword/forgot_password_bloc.dart';
+import 'VerifyCode/verify_code_event.dart';
+import 'VerifyCode/verify_code_bloc.dart';
+import 'forgot_password_event.dart';
+import 'forgot_password_bloc.dart';
+import 'ResetPassword/reset_password_bloc.dart';
+import 'ResetPassword/reset_password_event.dart';
 
 class ForgetPasswordFlow extends StatefulWidget {
   const ForgetPasswordFlow({super.key});
@@ -34,17 +36,37 @@ class _ForgetPasswordFlowState extends State<ForgetPasswordFlow> {
   }
 
   void _nextStep() {
-    if (_currentStep == 0 && _isEmailValid) {
+    if (_currentStep == 0) {
       final email = _emailController.text;
-      context.read<ForgotPasswordBloc>().add(SendForgotPasswordEmail(email));
-      setState(() => _currentStep = 1);
-    } else if (_currentStep == 1 && _codeControllers.every((c) => c.text.isNotEmpty)) {
-      final code = _codeControllers.map((c) => c.text).join();
-      context.read<VerifyCodeBloc>().add(SubmitVerificationCode(code));
-      setState(() => _currentStep = 2);
-    } else if (_currentStep == 2 && _isCodeValid) {
-      // هنا هنربط reset password بعدين
-      setState(() => _currentStep = 3);
+      _validateEmail(email);
+      if (_isEmailValid) {
+        context.read<ForgotPasswordBloc>().add(SendForgotPasswordEmail(email));
+        setState(() => _currentStep = 1);
+      }
+    } else if (_currentStep == 1) {
+      final codeFilled = _codeControllers.every((c) => c.text.isNotEmpty);
+      if (codeFilled) {
+        final code = _codeControllers.map((c) => c.text).join();
+        context.read<VerifyCodeBloc>().add(SubmitVerificationCode(code));
+        setState(() => _currentStep = 2);
+      } else {
+        setState(() => _isCodeValid = false);
+      }
+    } else if (_currentStep == 2) {
+      final newPass = _newPasswordController.text;
+      final confirmPass = _confirmPasswordController.text;
+      _validatePasswords(newPass, confirmPass);
+
+      if (_isCodeValid) {
+        final email = _emailController.text;
+        context.read<ResetPasswordBloc>().add(
+          SubmitResetPassword(
+            email: email,
+            newPassword: newPass,
+            reNewPassword: confirmPass,
+          ),
+        );
+      }
     }
   }
 

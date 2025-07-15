@@ -42,4 +42,15 @@ class AuthRepositoryImpl implements AuthRepository {
     return remote.verifyResetCode(code);
   }
 
+  @override
+  Future<void> resetPassword({
+    required String email,
+    required String newPassword,
+    required String reNewPassword}) {
+    return remote.resetPassword(
+        email: email,
+        newPassword: newPassword,
+        reNewPassword: reNewPassword
+    );
+  }
 }

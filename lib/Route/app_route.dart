@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-import '../features/auth/presentation/Screen/Login&sinin/forget_password_flow.dart';
+import '../features/auth/presentation/ForgotPassword/forget_password_flow.dart';
 import '../features/auth/presentation/bloc/signup/sinup_page.dart';
 import '../features/auth/presentation/bloc/login/login_page.dart';
 import '../main.dart';

@@ -1,20 +1,20 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:online_exam/features/auth/presentation/ForgotPassword/VerifyCode/verify_code_event.dart';
+import 'package:online_exam/features/auth/presentation/ForgotPassword/VerifyCode/verify_code_state.dart';
 
-import '../UseCase/ForgotPasswordUseCase.dart';
-import '../forgot_password_event.dart';
-import '../forgot_password_state.dart';
+import '../UseCase/verify_reset_code_use_case.dart';
 
-class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
-  final ForgotPasswordUseCase forgotUseCase;
+class VerifyCodeBloc extends Bloc<VerifyCodeEvent, VerifyCodeState> {
+  final VerifyResetCodeUseCase useCase;
 
-  ForgotPasswordBloc(this.forgotUseCase) : super(ForgotInitial()) {
-    on<SendForgotPasswordEmail>((event, emit) async {
-      emit(ForgotLoading());
+  VerifyCodeBloc(this.useCase) : super(VerifyInitial()) {
+    on<SubmitVerificationCode>((event, emit) async {
+      emit(VerifyLoading());
       try {
-        await forgotUseCase(event.email);
-        emit(ForgotSuccess());
+        await useCase(event.code);
+        emit(VerifySuccess());
       } catch (e) {
-        emit(ForgotFailure(e.toString()));
+        emit(VerifyFailure(e.toString()));
       }
     });
   }

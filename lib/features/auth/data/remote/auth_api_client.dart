@@ -19,4 +19,7 @@ abstract class AuthApiClient {
 
   @POST("/auth/verifyResetCode")
   Future<void> verifyResetCode(@Body() Map<String, dynamic> body);
+  
+  @POST("/auth/resetPassword")
+  Future<void> resetPassword(@Body() Map<String, dynamic> body);
 }
