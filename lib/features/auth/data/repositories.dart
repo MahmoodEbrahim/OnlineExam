@@ -37,4 +37,9 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> forgetpassword(String email) {
     return remote.forgetpassword(email);
   }
+  @override
+  Future<void> verifyResetCode(String code) {
+    return remote.verifyResetCode(code);
+  }
+
 }

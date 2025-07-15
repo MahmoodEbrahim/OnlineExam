@@ -12,5 +12,7 @@ abstract class AuthRepository{
     required String phone,
   });
   Future<void> forgetpassword(String email);
+  Future<void> verifyResetCode(String code);
+
 }
 

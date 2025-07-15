@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../ForgotPassword/VerifyCode/verify_code_event.dart';
+import '../../ForgotPassword/VerifyCode/verify_code_bloc.dart';
+import '../../ForgotPassword/forgot_password_event.dart';
+import '../../ForgotPassword/forgot_password_bloc.dart';
 
 class ForgetPasswordFlow extends StatefulWidget {
   const ForgetPasswordFlow({super.key});
@@ -18,7 +23,7 @@ class _ForgetPasswordFlowState extends State<ForgetPasswordFlow> {
 
   void _validateEmail(String email) {
     setState(() {
-      _isEmailValid = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+      _isEmailValid = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}\$').hasMatch(email);
     });
   }
 
@@ -30,10 +35,15 @@ class _ForgetPasswordFlowState extends State<ForgetPasswordFlow> {
 
   void _nextStep() {
     if (_currentStep == 0 && _isEmailValid) {
+      final email = _emailController.text;
+      context.read<ForgotPasswordBloc>().add(SendForgotPasswordEmail(email));
       setState(() => _currentStep = 1);
     } else if (_currentStep == 1 && _codeControllers.every((c) => c.text.isNotEmpty)) {
+      final code = _codeControllers.map((c) => c.text).join();
+      context.read<VerifyCodeBloc>().add(SubmitVerificationCode(code));
       setState(() => _currentStep = 2);
     } else if (_currentStep == 2 && _isCodeValid) {
+      // هنا هنربط reset password بعدين
       setState(() => _currentStep = 3);
     }
   }
