@@ -1,4 +1,4 @@
-import '../../../domain/repositories.dart';
+import '../../../../domain/repositories.dart';
 
 class VerifyResetCodeUseCase {
   final AuthRepository repository;

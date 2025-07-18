@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:online_exam/features/auth/presentation/ForgotPassword/VerifyCode/verify_code_event.dart';
-import 'package:online_exam/features/auth/presentation/ForgotPassword/VerifyCode/verify_code_state.dart';
+import 'package:online_exam/features/auth/presentation/bloc/ForgotPassword/VerifyCode/verify_code_event.dart';
+import 'package:online_exam/features/auth/presentation/bloc/ForgotPassword/VerifyCode/verify_code_state.dart';
 
 import '../UseCase/verify_reset_code_use_case.dart';
 
