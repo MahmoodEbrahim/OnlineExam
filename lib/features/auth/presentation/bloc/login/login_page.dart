@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam/Route/app_route.dart';
-import '../../../../../Theme/app_colors.dart';
+import '../../../../../core/Theme/app_colors.dart';
+import '../../../../../shared/HomeLayout.dart';
 import '../../../data/datasources.dart';
 import '../../../data/remote/auth_api_client.dart';
 import '../../../data/repositories.dart';
@@ -103,6 +104,12 @@ class LoginPage extends StatelessWidget {
                             final pass = passwordController.text;
                             context.read<LoginBloc>().add(
                               LoginButtonPressed(email, pass),
+                            );
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainLayout(initialIndex: 2),
+                              ),
                             );
                           },
                           child: Text("Login"),

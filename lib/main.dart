@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'Route/app_route.dart';
-import 'theme/theme.dart';
+import 'core/Theme/theme.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
