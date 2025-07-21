@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
+import 'package:online_exam/features/profile/data/datasources/user_local_storage.dart';
+import 'package:online_exam/features/profile/data/models/user_profile_model.dart';
 import '../../../domain/usecases.dart';
 import 'signup_event.dart';
 import 'signup_state.dart';
@@ -22,8 +23,10 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           rePassword: event.rePassword,
           phone: event.phone,
         );
-        final box = Hive.box('authBox');
-        await box.put('token', user.token);
+
+        final profile = UserProfileModel.fromUserModel(user );
+        await UserLocalStorage.saveUser(profile);
+
         emit(SignupSuccess());
       } catch (e) {
         if (e is DioError) {
@@ -35,7 +38,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           emit(SignupFailure(e.toString()));
         }
       }
-
     });
   }
 }

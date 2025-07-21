@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import '../features/auth/presentation/bloc/ForgotPassword/forget_password_flow.dart';
 import '../features/auth/presentation/bloc/signup/sinup_page.dart';
 import '../features/auth/presentation/bloc/login/login_page.dart';
+import '../features/profile/data/datasources/user_local_storage.dart';
 import '../features/profile/presentation/pages/Resetpassword/reset_password.dart';
 import '../features/profile/presentation/pages/profile_page.dart';
 abstract class AppRoutes {
+  final isLoggedIn = UserLocalStorage.isLoggedIn();
   static const String login = '/login';
   static const String signup = '/signup';
   static const String forgetpass = '/forgetpass';

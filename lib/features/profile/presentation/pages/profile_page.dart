@@ -53,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               enabled: enable,
                               decoration: InputDecoration(
                                 labelText: "First Name",
-                                hintText: "  ${user?.firstName} ",
+                                hintText: "${user?.firstName}",
                                 hintStyle: TextStyle(color: AppColors.blackDark),
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 border: OutlineInputBorder(),
@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             enabled: enable,
                             decoration: InputDecoration(
                               labelText: "Last name",
-                              hintText: "${user?.lastName} ",
+                              hintText: "${user?.lastName}",
                               hintStyle: TextStyle(color: AppColors.blackDark),
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               border: OutlineInputBorder(),
@@ -129,7 +129,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       },
                           child: Text("Update")
                       ),
-                    )
+                    ),
+                    SizedBox(height: screenHigh*0.1,),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await UserLocalStorage.clearUser();
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          AppRoutes.login,
+                              (route) => false,
+                        );
+                      },
+                      child: Text("Logout"),
+                    ),
+
+
                   ],
                 ),
               ],

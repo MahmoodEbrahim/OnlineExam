@@ -1,3 +1,5 @@
+import '../../../auth/data/models.dart';
+
 class UserProfileModel {
   final String username;
   final String firstName;
@@ -13,6 +15,16 @@ class UserProfileModel {
     required this.phone,
   });
 
+  factory UserProfileModel.fromUserModel(UserModel user) {
+    return UserProfileModel(
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phone: user.phone,
+    );
+  }
+
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
     return UserProfileModel(
       username: json['username'],
@@ -22,6 +34,7 @@ class UserProfileModel {
       phone: json['phone'],
     );
   }
+
   Map<String, dynamic> toJson() {
     return {
       'username': username,

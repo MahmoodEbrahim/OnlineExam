@@ -3,24 +3,27 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'Route/app_route.dart';
 import 'core/Theme/theme.dart';
+import 'features/profile/data/datasources/user_local_storage.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox('userBox');
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+
+   MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final isLoggedIn = UserLocalStorage.isLoggedIn();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'My App',
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.login,
+      initialRoute: isLoggedIn ? AppRoutes.profilePage : AppRoutes.login,
       routes: AppRoutes.getRoutes(),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:online_exam/features/auth/data/models.dart';
 import '../../../../profile/data/datasources/user_local_storage.dart';
 import '../../../../profile/data/models/user_profile_model.dart';
 import '../../../domain/usecases.dart';
@@ -14,15 +15,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(LoginLoading());
       try {
         final user = await loginUseCase(event.email, event.password);
-        final userMap = {
-          "username": user.username,
-          "firstName": user.firstName,
-          "lastName": user.lastName,
-          "email": user.email,
-          "phone": user.phone,
-        };
-        final userProfile = UserProfileModel.fromJson(userMap);
-        UserLocalStorage.saveUser(userProfile);
+        final profile = UserProfileModel.fromUserModel(user as UserModel);
+        await UserLocalStorage.saveUser(profile);
         emit(LoginSuccess());
       } catch (e) {
         emit(LoginFailure(e.toString()));

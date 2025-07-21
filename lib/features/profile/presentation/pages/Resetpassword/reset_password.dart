@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/Theme/app_colors.dart';
 
 class ResetPassword extends StatelessWidget {
   const ResetPassword({super.key});

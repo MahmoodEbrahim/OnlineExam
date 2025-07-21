@@ -1,8 +1,8 @@
-import 'package:online_exam/features/auth/domain/entities.dart';
+import '../data/models.dart';
 
-abstract class AuthRepository{
-  Future<UserEntity> login(String email,String password);
-  Future<UserEntity> signup({
+abstract class AuthRepository {
+  Future<UserModel> login(String email, String password);
+  Future<UserModel> signup({
     required String username,
     required String firstName,
     required String lastName,
@@ -19,4 +19,3 @@ abstract class AuthRepository{
     required String reNewPassword,
   });
 }
-
