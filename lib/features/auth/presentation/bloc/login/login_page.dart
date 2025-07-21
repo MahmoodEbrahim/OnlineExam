@@ -98,22 +98,44 @@ class LoginPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         height: 48,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            final email = emailController.text;
-                            final pass = passwordController.text;
-                            context.read<LoginBloc>().add(
-                              LoginButtonPressed(email, pass),
-                            );
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MainLayout(initialIndex: 2),
-                              ),
-                            );
+                        child:
+                        BlocListener<LoginBloc, LoginState>(
+                          listener: (context, state) {
+                            if (state is LoginSuccess) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (_) => MainLayout(initialIndex: 2)),
+                              );
+                            } else if (state is LoginFailure) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Login failed")),
+                              );
+                            }
                           },
-                          child: Text("Login"),
-                        ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              final email = emailController.text.trim();
+                              final pass = passwordController.text.trim();
+
+                              if (email.isEmpty || pass.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("All fields are required")),
+                                );
+                                return;
+                              }
+                              final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                              if (!emailRegex.hasMatch(email)) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("Enter a valid email")),
+                                );
+                                return;
+                              }
+                              context.read<LoginBloc>().add(LoginButtonPressed(email, pass));
+                            },
+                            child: Text("Login"),
+                          )
+                        )
+
                       ),
                       const SizedBox(height: 16),
                       InkWell(

@@ -22,4 +22,7 @@ abstract class AuthApiClient {
   
   @POST("/auth/resetPassword")
   Future<void> resetPassword(@Body() Map<String, dynamic> body);
+
+  @POST("/auth/profileData")
+  Future<void> profileData(@Body() Map<String, dynamic> body);
 }

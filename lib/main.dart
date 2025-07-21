@@ -7,7 +7,7 @@ import 'core/Theme/theme.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.openBox('authBox');
+  await Hive.openBox('userBox');
   runApp(const MyApp());
 }
 

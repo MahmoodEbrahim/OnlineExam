@@ -129,22 +129,54 @@ class SignupPage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       height: 48,
-                      child: ElevatedButton(
+                      child:ElevatedButton(
                         onPressed: () {
+                          final username = usernameController.text.trim();
+                          final firstName = firstNameController.text.trim();
+                          final lastName = lastNameController.text.trim();
+                          final email = emailController.text.trim();
+                          final phone = phoneController.text.trim();
+                          final pass = passwordController.text.trim();
+                          final confirmPass = confirmPasswordController.text.trim();
+                          if (username.isEmpty ||
+                              firstName.isEmpty ||
+                              lastName.isEmpty ||
+                              email.isEmpty ||
+                              phone.isEmpty ||
+                              pass.isEmpty ||
+                              confirmPass.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Please fill in all fields")),
+                            );
+                            return;
+                          }
+                          final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                          if (!emailRegex.hasMatch(email)) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Invalid email format")),
+                            );
+                            return;
+                          }
+                          if (pass != confirmPass) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Passwords do not match")),
+                            );
+                            return;
+                          }
                           context.read<SignupBloc>().add(
                             SignupButtonPressed(
-                              username: usernameController.text,
-                              firstName: firstNameController.text,
-                              lastName: lastNameController.text,
-                              email: emailController.text,
-                              password: passwordController.text,
-                              rePassword: confirmPasswordController.text,
-                              phone: phoneController.text,
+                              username: username,
+                              firstName: firstName,
+                              lastName: lastName,
+                              email: email,
+                              password: pass,
+                              rePassword: confirmPass,
+                              phone: phone,
                             ),
                           );
                         },
                         child: Text("Signup"),
-                      ),
+                      )
                     ),
                     SizedBox(height: 12),
                     InkWell(

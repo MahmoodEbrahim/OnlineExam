@@ -3,6 +3,7 @@ import 'package:online_exam/Route/app_route.dart';
 import 'package:online_exam/features/profile/presentation/pages/addphoto/image_picker_widget.dart';
 
 import '../../../../core/Theme/app_colors.dart';
+import '../../data/datasources/user_local_storage.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -16,6 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = UserLocalStorage.getUser();
     final double screenWidth= MediaQuery.of(context).size.width;
     final double screenHigh= MediaQuery.of(context).size.width;
     return SafeArea(
@@ -35,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       enabled: enable,
                       decoration: InputDecoration(
                         labelText: "User name",
-                        hintText: " Mahmoud Ebrahim Ahmed ",
+                        hintText: "${user?.username} ",
                         hintStyle: TextStyle(color: AppColors.blackDark),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: OutlineInputBorder(),
@@ -50,8 +52,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             TextField(
                               enabled: enable,
                               decoration: InputDecoration(
-                                labelText: "First name",
-                                hintText: " Mahmoud ",
+                                labelText: "First Name",
+                                hintText: "  ${user?.firstName} ",
                                 hintStyle: TextStyle(color: AppColors.blackDark),
                                 floatingLabelBehavior: FloatingLabelBehavior.always,
                                 border: OutlineInputBorder(),
@@ -65,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             enabled: enable,
                             decoration: InputDecoration(
                               labelText: "Last name",
-                              hintText: "Ahmed ",
+                              hintText: "${user?.lastName} ",
                               hintStyle: TextStyle(color: AppColors.blackDark),
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               border: OutlineInputBorder(),
@@ -79,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       enabled: enable,
                       decoration: InputDecoration(
                         labelText: "Email",
-                        hintText: " Mohamed098@gmail.com",
+                        hintText: " ${user?.email}",
                         hintStyle: TextStyle(color: AppColors.blackDark),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: OutlineInputBorder(),
@@ -110,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       enabled: enable,
                       decoration: InputDecoration(
                         labelText: "Phone number",
-                        hintText: "1234567890987",
+                        hintText: "${user?.phone}",
                         hintStyle: TextStyle(color: AppColors.blackDark),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: OutlineInputBorder(),
