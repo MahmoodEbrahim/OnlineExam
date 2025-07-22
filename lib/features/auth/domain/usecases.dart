@@ -1,4 +1,3 @@
-import 'package:online_exam/features/auth/domain/entities.dart';
 import 'package:online_exam/features/auth/domain/repositories.dart';
 
 import '../data/models.dart';

@@ -23,7 +23,7 @@ class LoginPage extends StatelessWidget {
       create: (context) {
         final dio = Dio();
         final apiClient = AuthApiClient(dio);
-        final datasource = AuthRemoteDatasource(apiClient);
+        final datasource = AuthRemoteDatasource(apiClient,dio);
         final repository = AuthRepositoryImpl(datasource);
         final useCase = LogicUserCase(repository);
         return LoginBloc(useCase);

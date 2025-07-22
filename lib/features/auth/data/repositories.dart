@@ -1,4 +1,3 @@
-import '../domain/entities.dart';
 import '../domain/repositories.dart';
 import 'datasources.dart';
 import 'models.dart';
@@ -54,4 +53,22 @@ class AuthRepositoryImpl implements AuthRepository {
         reNewPassword: reNewPassword
     );
   }
+  @override
+  Future<UserModel> updateUser({
+    required String username,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phone,
+  }) async {
+    final response = await remote.updateUser(
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+    );
+    return response;
+  }
+
 }

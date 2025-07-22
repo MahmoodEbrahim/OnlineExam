@@ -1,12 +1,26 @@
-import '../entities/user_profile_entity.dart';
-import '../repositories/profile_repository.dart';
+import 'package:online_exam/features/auth/data/models.dart';
 
-class UpdateProfileUseCase {
-  final ProfileRepository repository;
+import '../../../auth/domain/repositories.dart';
 
-  UpdateProfileUseCase(this.repository);
 
-  Future<void> call(UserProfileEntity user) {
-    return repository.updateProfile(user);
+class UpdateUserUseCase {
+  final AuthRepository repo;
+
+  UpdateUserUseCase(this.repo);
+
+  Future<UserModel> call({
+    required String username,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phone,
+  }) async {
+    return await repo.updateUser(
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+    );
   }
 }
