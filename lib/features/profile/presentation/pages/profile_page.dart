@@ -1,9 +1,17 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:online_exam/Route/app_route.dart';
 import 'package:online_exam/features/profile/presentation/pages/addphoto/image_picker_widget.dart';
 
 import '../../../../core/Theme/app_colors.dart';
+import '../../../../core/di/di.dart';
+import '../../../auth/data/datasources.dart';
+import '../../../auth/data/models.dart';
+import '../../../auth/data/remote/auth_api_client.dart';
+import '../../../auth/data/repositories.dart';
 import '../../data/datasources/user_local_storage.dart';
+import '../../data/models/user_profile_model.dart';
+import '../../domain/usecases/update_profile_usecase.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -14,10 +22,63 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool enable = false;
+  late TextEditingController usernameController;
+  late TextEditingController firstNameController;
+  late TextEditingController lastNameController;
+  late TextEditingController emailController;
+  late TextEditingController phoneController;
+  void _updateProfile() async {
+    final updateUseCase = sl<UpdateUserUseCase>();
+    try {
+      final updatedUser = await updateUseCase(
+        username: usernameController.text.trim(),
+        firstName: firstNameController.text.trim(),
+        lastName: lastNameController.text.trim(),
+        email: emailController.text.trim(),
+        phone: phoneController.text.trim(),
+      );
+
+      final profile = UserProfileModel.fromUserModel(updatedUser as UserModel);
+      await UserLocalStorage.saveUser(profile);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Profile updated successfully ✅")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Update failed: $e")),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final user = UserLocalStorage.getUser();
+    usernameController = TextEditingController(text: user?.username ?? "");
+    firstNameController = TextEditingController(text: user?.firstName ?? "");
+    lastNameController = TextEditingController(text: user?.lastName ?? "");
+    emailController = TextEditingController(text: user?.email ?? "");
+    phoneController = TextEditingController(text: user?.phone ?? "");
+  }
 
   @override
   Widget build(BuildContext context) {
     final user = UserLocalStorage.getUser();
+    void _updateProfile() async {
+      final updatedUser = UserProfileModel(
+        username: usernameController.text.trim(),
+        firstName: firstNameController.text.trim(),
+        lastName: lastNameController.text.trim(),
+        email: emailController.text.trim(),
+        phone: phoneController.text.trim(),
+      );
+
+      await UserLocalStorage.saveUser(updatedUser);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Profile updated successfully ✅")),
+      );
+    }
     final double screenWidth= MediaQuery.of(context).size.width;
     final double screenHigh= MediaQuery.of(context).size.width;
     return SafeArea(
@@ -125,6 +186,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ElevatedButton(onPressed: (){
                         setState(() {
                           enable=!enable;
+                          _updateProfile;
                         });
                       },
                           child: Text("Update")
@@ -142,8 +204,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       },
                       child: Text("Logout"),
                     ),
-
-
                   ],
                 ),
               ],
