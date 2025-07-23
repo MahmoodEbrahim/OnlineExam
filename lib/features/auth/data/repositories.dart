@@ -54,21 +54,23 @@ class AuthRepositoryImpl implements AuthRepository {
     );
   }
   @override
-  Future<UserModel> updateUser({
+  Future<void> editProfile({
     required String username,
     required String firstName,
     required String lastName,
     required String email,
     required String phone,
-  }) async {
-    final response = await remote.updateUser(
+  }) {
+    return remote.updateUser(
       username: username,
       firstName: firstName,
       lastName: lastName,
       email: email,
       phone: phone,
     );
-    return response;
   }
+
+
+
 
 }

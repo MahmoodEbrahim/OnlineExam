@@ -9,14 +9,12 @@ class AuthRemoteDatasource {
   final Dio client;
 
   AuthRemoteDatasource(this.apiClient, this.client);
-
   Future<UserModel> login(String email, String password) {
     return apiClient.login({
       "email": email,
       "password": password,
     });
   }
-
   Future<UserModel> signup({
     required String username,
     required String firstName,
@@ -36,15 +34,12 @@ class AuthRemoteDatasource {
       "phone": phone,
     });
   }
-
   Future<void> forgetpassword(String email) async {
     await apiClient.forgetpassword({"email": email});
   }
-
   Future<void> verifyResetCode(String code) async {
     await apiClient.verifyResetCode({"resetCode": code});
   }
-
   Future<void> resetPassword({
     required String email,
     required String newPassword,
@@ -56,32 +51,27 @@ class AuthRemoteDatasource {
       "reNewPassword": reNewPassword,
     });
   }
-
-  Future<UserModel> updateUser({
+  Future<void> updateUser({
     required String username,
     required String firstName,
     required String lastName,
     required String email,
     required String phone,
   }) async {
-    final token = await Hive.box('userBox').get('token');
-
-    final response = await client.put(
-      'https://yourapi.com/profile/update',
-      data: {
+    final token = Hive.box('userBox').get('token');
+    await apiClient.editProfile(
+      {
         "username": username,
         "firstName": firstName,
         "lastName": lastName,
         "email": email,
         "phone": phone,
       },
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      ),
+      "Bearer $token",
     );
-
-    return UserModel.fromJson(response.data);
   }
+
+
+
 }
+

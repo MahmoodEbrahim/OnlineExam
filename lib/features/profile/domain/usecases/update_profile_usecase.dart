@@ -1,21 +1,18 @@
-import 'package:online_exam/features/auth/data/models.dart';
-
 import '../../../auth/domain/repositories.dart';
-
 
 class UpdateUserUseCase {
   final AuthRepository repo;
 
   UpdateUserUseCase(this.repo);
 
-  Future<UserModel> call({
+  Future<void> call({
     required String username,
     required String firstName,
     required String lastName,
     required String email,
     required String phone,
   }) async {
-    return await repo.updateUser(
+    await repo.editProfile(
       username: username,
       firstName: firstName,
       lastName: lastName,
